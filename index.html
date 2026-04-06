@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hackaccino Project Blog</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div>
+        <p class="eyebrow">Project Dossier</p>
+        <h1>Hackaccino: IntentFirewall Technical Blog</h1>
+      </div>
+      <p class="header-subtitle">A technical walkthrough of the IntentFirewall workspace, including product vision, architecture, and implementation details.</p>
+    </div>
+  </header>
+
+  <main class="content-grid">
+    <nav class="sidebar">
+      <h2>Contents</h2>
+      <ul>
+        <li><a href="#purpose">Purpose</a></li>
+        <li><a href="#vision">Vision &amp; Product Intent</a></li>
+        <li><a href="#topology">Workspace Topology</a></li>
+        <li><a href="#architecture">Runtime Architecture</a></li>
+        <li><a href="#react-native">React Native Layer</a></li>
+        <li><a href="#android-native">Android Native Layer</a></li>
+        <li><a href="#python-pipeline">Python ML Pipeline</a></li>
+        <li><a href="#server">Federated Reputation Server</a></li>
+      </ul>
+    </nav>
+
+    <article class="post-body">
+      <section id="purpose">
+        <h2>1. Document Purpose</h2>
+        <p>This technical dossier is a complete engineering context reference for the Hackaccino workspace. It answers the product vision, runtime architecture, data flow, and current implementation status for both mobile and ML components.</p>
+        <ul>
+          <li>Describe product intent and vision</li>
+          <li>Explain how the app works end to end</li>
+          <li>Detail each runtime layer: React Native, Android native, ML pipeline, and server</li>
+          <li>Highlight implemented features versus placeholders</li>
+          <li>Explain how to run, test, and troubleshoot the system</li>
+        </ul>
+      </section>
+
+      <section id="vision">
+        <h2>2. Vision &amp; Product Intent</h2>
+        <p>The product is currently deployed as <strong>IntentFirewall V2</strong>, a mobile security application focused on scam and synthetic content defense.</p>
+        <div class="feature-grid">
+          <div>
+            <h3>Core goals</h3>
+            <ul>
+              <li>Protect users from social engineering and scam messages</li>
+              <li>Detect synthetic or deepfake call audio</li>
+              <li>Keep sensitive inference local on device</li>
+              <li>Optionally federate privacy-preserving risk signals</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Defense tiers</h3>
+            <ul>
+              <li><strong>Tier 1:</strong> Regex and heuristic filtering</li>
+              <li><strong>Tier 2:</strong> Distilled text classifier</li>
+              <li><strong>Tier 3:</strong> Additional classifier fusion</li>
+              <li><strong>Audio:</strong> TFLite models with LFCC, glottal, and WavLM student features</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="topology">
+        <h2>3. Workspace Topology</h2>
+        <p>The workspace is organized across multiple runtime domains:</p>
+        <ul>
+          <li>React Native app shell: <code>App.tsx</code>, <code>index.js</code>, <code>src/</code></li>
+          <li>Android native implementation: <code>android/app/src/main/java/com/intentfirewall/</code></li>
+          <li>iOS shell: <code>ios/IntentFirewall/</code></li>
+          <li>Python ML pipeline scripts in the root</li>
+          <li>Model/data assets: <code>android/app/src/main/assets/</code></li>
+          <li>Data folders: <code>dataset/</code>, <code>modern_attacks/</code>, <code>evaluation/</code></li>
+        </ul>
+        <p><strong>Quick source counts:</strong> 9 TS/TSX files, 10 Kotlin files, 20 Python scripts.</p>
+      </section>
+
+      <section id="architecture">
+        <h2>4. Runtime Architecture Overview</h2>
+        <p>The system spans mobile UI, native Android monitoring, and Python model training.</p>
+        <div class="architecture-card">
+          <h3>Mobile app composition</h3>
+          <p>The app boots from <code>index.js</code> and renders <code>App.tsx</code>, which returns the navigation stack for Home, Warning, History, and Settings.</p>
+        </div>
+        <div class="architecture-card">
+          <h3>Android text pipeline</h3>
+          <p>Notifications are filtered, batched into context, and scored through Tier 1, Tier 2, and optional Tier 3 detectors before emitting events to React Native.</p>
+        </div>
+        <div class="architecture-card">
+          <h3>Android audio pipeline</h3>
+          <p>Call audio is captured in 2-second windows, scored for synthetic speech, and flagged when confidence is high.</p>
+        </div>
+        <div class="architecture-card">
+          <h3>Python ML pipeline</h3>
+          <p>Python scripts support dataset building, model training, distillation, export, and evaluation for text and audio detectors.</p>
+        </div>
+        <div class="architecture-card">
+          <h3>Federated server</h3>
+          <p>The optional Traverse server manages HMAC-validated submissions, Bloom filters, differential privacy, and reputation scoring.</p>
+        </div>
+      </section>
+
+      <section id="react-native">
+        <h2>5. React Native Layer</h2>
+        <p>The React Native app handles UI, settings, threat history, and event bridging from native detectors.</p>
+        <div class="subsection">
+          <h3>Key screens</h3>
+          <ul>
+            <li><strong>Home:</strong> displays protection state, recent threats, and listens for native notifications.</li>
+            <li><strong>Warning:</strong> shows threat details and blocking actions.</li>
+            <li><strong>History:</strong> lists past threats with filtering.</li>
+            <li><strong>Settings:</strong> user preferences, permissions, and clear history actions.</li>
+          </ul>
+        </div>
+        <div class="subsection">
+          <h3>Threat storage and detection</h3>
+          <p>Threats are saved by ID and include category, confidence, blocked state, and timestamp. Settings persist via AsyncStorage.</p>
+          <p>The in-app detector uses keyword weighting to score scam content, generate a confidence value, and resolve categories such as OTP, Authority, Urgency, and Impersonation.</p>
+        </div>
+      </section>
+
+      <section id="android-native">
+        <h2>6. Android Native Layer</h2>
+        <p>The Android layer is responsible for monitoring notifications, running local classifiers, and bridging events into React Native.</p>
+        <div class="subsection">
+          <h3>Build setup</h3>
+          <p>Android is configured for SDK 36 with Hermes enabled and includes TFLite plus ONNX runtime dependencies. Services and notification listeners are declared in the manifest.</p>
+        </div>
+        <div class="subsection">
+          <h3>Notification pipeline</h3>
+          <p><code>NotificationService</code> captures posted notifications, filters by supported apps, buffers context, and applies tiered detection logic.</p>
+        </div>
+        <div class="subsection">
+          <h3>Event bridge</h3>
+          <p><code>NotificationEventEmitter</code> emits native events named <code>onNotification</code> to React Native with classification metadata.</p>
+        </div>
+      </section>
+
+      <section id="python-pipeline">
+        <h2>7. Python ML Pipeline</h2>
+        <p>The Python scripts support end-to-end model development, including feature extraction, training, distillation, and export.</p>
+        <ul>
+          <li>Dataset building and preprocessing</li>
+          <li>Detector model definitions and training loops</li>
+          <li>Distillation workflows for compact student models</li>
+          <li>ONNX and TFLite export scripts</li>
+          <li>Modern attack evaluation and benchmarking</li>
+        </ul>
+      </section>
+
+      <section id="server">
+        <h2>8. Federated Reputation Server</h2>
+        <p>The optional <code>traverse_server.py</code> provides a privacy-preserving server backend for risk signals.</p>
+        <ul>
+          <li>HMAC-validated submissions</li>
+          <li>Epoch-partitioned Bloom filters</li>
+          <li>Differential privacy via Laplace noise</li>
+          <li>Device consensus gating and reputation scoring</li>
+        </ul>
+      </section>
+
+      <footer class="site-footer">
+        <p>Generated blog site from the Hackaccino / IntentFirewall technical dossier.</p>
+      </footer>
+    </article>
+  </main>
+</body>
+</html>
