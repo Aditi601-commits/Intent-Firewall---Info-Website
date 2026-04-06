@@ -45,11 +45,14 @@ body::before {
 .matrix-overlay {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Crect width='220' height='220' fill='transparent'/%3E%3Ctext x='0' y='18' font-family='JetBrains Mono' font-size='14' fill='%2378ff61' opacity='0.24'%3E01001010 10100101%3C/text%3E%3Ctext x='0' y='38' font-family='JetBrains Mono' font-size='14' fill='%2346d5ff' opacity='0.22'%3E11010110 01011010%3C/text%3E%3Ctext x='0' y='58' font-family='JetBrains Mono' font-size='14' fill='%2378ff61' opacity='0.24'%3E00111001 01101011%3C/text%3E%3Ctext x='0' y='78' font-family='JetBrains Mono' font-size='14' fill='%2346d5ff' opacity='0.22'%3E10100110 11010010%3C/text%3E%3Ctext x='0' y='98' font-family='JetBrains Mono' font-size='14' fill='%2378ff61' opacity='0.24'%3E01011001 10100101%3C/text%3E%3Ctext x='0' y='118' font-family='JetBrains Mono' font-size='14' fill='%2346d5ff' opacity='0.22'%3E11001010 01010110%3C/text%3E%3Ctext x='0' y='138' font-family='JetBrains Mono' font-size='14' fill='%2378ff61' opacity='0.24'%3E00100101 10101001%3C/text%3E%3Ctext x='0' y='158' font-family='JetBrains Mono' font-size='14' fill='%2346d5ff' opacity='0.22'%3E10010110 01001101%3C/text%3E%3Csvg%3E");
-  background-size: 220px 220px;
-  opacity: 0.45;
+  background-color: rgba(0, 10, 5, 0.25);
+  background-image: linear-gradient(rgba(120, 255, 97, 0.07) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(120, 255, 97, 0.07) 1px, transparent 1px),
+                    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Crect width='220' height='220' fill='transparent'/%3E%3Ctext x='0' y='18' font-family='JetBrains Mono' font-size='14' fill='%2378ff61' opacity='0.48'%3E01001010 10100101%3C/text%3E%3Ctext x='0' y='38' font-family='JetBrains Mono' font-size='14' fill='%2346d5ff' opacity='0.42'%3E11010110 01011010%3C/text%3E%3Ctext x='0' y='58' font-family='JetBrains Mono' font-size='14' fill='%2378ff61' opacity='0.48'%3E00111001 01101011%3C/text%3E%3Ctext x='0' y='78' font-family='JetBrains Mono' font-size='14' fill='%2346d5ff' opacity='0.42'%3E10100110 11010010%3C/text%3E%3Ctext x='0' y='98' font-family='JetBrains Mono' font-size='14' fill='%2378ff61' opacity='0.48'%3E01011001 10100101%3C/text%3E%3Ctext x='0' y='118' font-family='JetBrains Mono' font-size='14' fill='%2346d5ff' opacity='0.42'%3E11001010 01010110%3C/text%3E%3Ctext x='0' y='138' font-family='JetBrains Mono' font-size='14' fill='%2378ff61' opacity='0.48'%3E00100101 10101001%3C/text%3E%3Ctext x='0' y='158' font-family='JetBrains Mono' font-size='14' fill='%2346d5ff' opacity='0.42'%3E10010110 01001101%3C/text%3E%3C/svg%3E");
+  background-size: 100% 80px, 80px 100%, 220px 220px;
+  opacity: 1;
   animation: matrix-scroll 14s linear infinite;
   mix-blend-mode: normal;
 }
@@ -58,13 +61,13 @@ body::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 15% 10%, rgba(120, 255, 97, 0.16), transparent 12%),
-              radial-gradient(circle at 85% 80%, rgba(70, 213, 255, 0.12), transparent 14%);
+  background: radial-gradient(circle at 15% 10%, rgba(120, 255, 97, 0.22), transparent 14%),
+              radial-gradient(circle at 85% 80%, rgba(70, 213, 255, 0.18), transparent 18%);
 }
 
 @keyframes matrix-scroll {
   0% { transform: translateY(0); }
-  100% { transform: translateY(-180px); }
+  100% { transform: translateY(-198px); }
 }
 
 img {
