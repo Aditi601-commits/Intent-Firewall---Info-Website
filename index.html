@@ -25,155 +25,109 @@
     <nav class="sidebar">
       <h2>Contents</h2>
       <ul>
-        <li><a href="#purpose">Purpose</a></li>
-        <li><a href="#vision">Vision &amp; Product Intent</a></li>
-        <li><a href="#topology">Workspace Topology</a></li>
-        <li><a href="#architecture">Runtime Architecture</a></li>
-        <li><a href="#react-native">React Native Layer</a></li>
-        <li><a href="#android-native">Android Native Layer</a></li>
-        <li><a href="#python-pipeline">Python ML Pipeline</a></li>
-        <li><a href="#server">Federated Reputation Server</a></li>
+        <li><a href="#purpose">What is IntentFirewall?</a></li>
+        <li><a href="#vision">The Vision</a></li>
+        <li><a href="#architecture">How It Works</a></li>
+        <li><a href="#technology">Technology Stack</a></li>
+        <li><a href="#features">Key Features</a></li>
+        <li><a href="#future">What's Next</a></li>
       </ul>
     </nav>
 
     <article class="post-body">
       <section id="purpose">
-        <h2>1. Document Purpose</h2>
-        <p>This technical dossier is a complete engineering context reference for the Hackaccino workspace. It answers the product vision, runtime architecture, data flow, and current implementation status for both mobile and ML components.</p>
-        <ul>
-          <li>Describe product intent and vision</li>
-          <li>Explain how the app works end to end</li>
-          <li>Detail each runtime layer: React Native, Android native, ML pipeline, and server</li>
-          <li>Highlight implemented features versus placeholders</li>
-          <li>Explain how to run, test, and troubleshoot the system</li>
-        </ul>
+        <h2>1. What is IntentFirewall?</h2>
+        <p>IntentFirewall is an innovative mobile security application that protects users from sophisticated social engineering attacks and deepfake audio threats. Built with cutting-edge machine learning and multi-layered defense systems, it represents the next generation of on-device security.</p>
       </section>
 
       <section id="vision">
-        <h2>2. Vision &amp; Product Intent</h2>
-        <p>The product is currently deployed as <strong>IntentFirewall V2</strong>, a mobile security application focused on scam and synthetic content defense.</p>
+        <h2>2. The Vision Behind the Project</h2>
+        <p>Created as part of the Hackaccino initiative, IntentFirewall tackles the growing threat of synthetic media and advanced social engineering. The app combines traditional security approaches with modern AI to create a comprehensive defense system.</p>
         <div class="feature-grid">
           <div>
-            <h3>Core goals</h3>
-            <ul>
-              <li>Protect users from social engineering and scam messages</li>
-              <li>Detect synthetic or deepfake call audio</li>
-              <li>Keep sensitive inference local on device</li>
-              <li>Optionally federate privacy-preserving risk signals</li>
-            </ul>
+            <h3>🎯 Core Mission</h3>
+            <p>Stop scam messages and detect deepfake calls before they can cause harm</p>
           </div>
           <div>
-            <h3>Defense tiers</h3>
-            <ul>
-              <li><strong>Tier 1:</strong> Regex and heuristic filtering</li>
-              <li><strong>Tier 2:</strong> Distilled text classifier</li>
-              <li><strong>Tier 3:</strong> Additional classifier fusion</li>
-              <li><strong>Audio:</strong> TFLite models with LFCC, glottal, and WavLM student features</li>
-            </ul>
+            <h3>🔒 Privacy-First</h3>
+            <p>All processing happens locally on your device - no data leaves your phone</p>
+          </div>
+          <div>
+            <h3>🛡️ Multi-Tier Defense</h3>
+            <p>Combines regex filtering, text classification, and audio analysis</p>
           </div>
         </div>
-      </section>
-
-      <section id="topology">
-        <h2>3. Workspace Topology</h2>
-        <p>The workspace is organized across multiple runtime domains:</p>
-        <ul>
-          <li>React Native app shell: <code>App.tsx</code>, <code>index.js</code>, <code>src/</code></li>
-          <li>Android native implementation: <code>android/app/src/main/java/com/intentfirewall/</code></li>
-          <li>iOS shell: <code>ios/IntentFirewall/</code></li>
-          <li>Python ML pipeline scripts in the root</li>
-          <li>Model/data assets: <code>android/app/src/main/assets/</code></li>
-          <li>Data folders: <code>dataset/</code>, <code>modern_attacks/</code>, <code>evaluation/</code></li>
-        </ul>
-        <p><strong>Quick source counts:</strong> 9 TS/TSX files, 10 Kotlin files, 20 Python scripts.</p>
       </section>
 
       <section id="architecture">
-        <h2>4. Runtime Architecture Overview</h2>
-        <p>The system spans mobile UI, native Android monitoring, and Python model training.</p>
+        <h2>3. How It Works</h2>
+        <p>The system is built across multiple platforms with specialized components for different types of threats.</p>
         <div class="architecture-card">
-          <h3>Mobile app composition</h3>
-          <p>The app boots from <code>index.js</code> and renders <code>App.tsx</code>, which returns the navigation stack for Home, Warning, History, and Settings.</p>
+          <h3>📱 Mobile App</h3>
+          <p>React Native interface with native Android integration for real-time threat detection</p>
         </div>
         <div class="architecture-card">
-          <h3>Android text pipeline</h3>
-          <p>Notifications are filtered, batched into context, and scored through Tier 1, Tier 2, and optional Tier 3 detectors before emitting events to React Native.</p>
+          <h3>🤖 Text Analysis</h3>
+          <p>Multi-stage text classification using distilled BERT models and heuristic scoring</p>
         </div>
         <div class="architecture-card">
-          <h3>Android audio pipeline</h3>
-          <p>Call audio is captured in 2-second windows, scored for synthetic speech, and flagged when confidence is high.</p>
+          <h3>🎵 Audio Deepfake Detection</h3>
+          <p>TFLite models analyze call audio using LFCC features and WavLM embeddings</p>
         </div>
         <div class="architecture-card">
-          <h3>Python ML pipeline</h3>
-          <p>Python scripts support dataset building, model training, distillation, export, and evaluation for text and audio detectors.</p>
-        </div>
-        <div class="architecture-card">
-          <h3>Federated server</h3>
-          <p>The optional Traverse server manages HMAC-validated submissions, Bloom filters, differential privacy, and reputation scoring.</p>
+          <h3>🔬 ML Pipeline</h3>
+          <p>Python-based training and distillation system for model optimization</p>
         </div>
       </section>
 
-      <section id="react-native">
-        <h2>5. React Native Layer</h2>
-        <p>The React Native app handles UI, settings, threat history, and event bridging from native detectors.</p>
+      <section id="technology">
+        <h2>4. Technology Stack</h2>
+        <p>IntentFirewall leverages modern technologies to deliver high-performance security:</p>
         <div class="subsection">
-          <h3>Key screens</h3>
+          <h3>Frontend & Mobile</h3>
           <ul>
-            <li><strong>Home:</strong> displays protection state, recent threats, and listens for native notifications.</li>
-            <li><strong>Warning:</strong> shows threat details and blocking actions.</li>
-            <li><strong>History:</strong> lists past threats with filtering.</li>
-            <li><strong>Settings:</strong> user preferences, permissions, and clear history actions.</li>
+            <li><strong>React Native:</strong> Cross-platform mobile development</li>
+            <li><strong>Android Native:</strong> Direct system integration for notifications and calls</li>
+            <li><strong>AsyncStorage:</strong> Local data persistence for settings and threat history</li>
           </ul>
         </div>
         <div class="subsection">
-          <h3>Threat storage and detection</h3>
-          <p>Threats are saved by ID and include category, confidence, blocked state, and timestamp. Settings persist via AsyncStorage.</p>
-          <p>The in-app detector uses keyword weighting to score scam content, generate a confidence value, and resolve categories such as OTP, Authority, Urgency, and Impersonation.</p>
+          <h3>AI & Machine Learning</h3>
+          <ul>
+            <li><strong>TensorFlow Lite:</strong> On-device inference for real-time analysis</li>
+            <li><strong>DistilBERT:</strong> Compact text classification models</li>
+            <li><strong>WavLM:</strong> Advanced audio feature extraction</li>
+            <li><strong>Custom ML Pipeline:</strong> Python-based training and model optimization</li>
+          </ul>
         </div>
       </section>
 
-      <section id="android-native">
-        <h2>6. Android Native Layer</h2>
-        <p>The Android layer is responsible for monitoring notifications, running local classifiers, and bridging events into React Native.</p>
-        <div class="subsection">
-          <h3>Build setup</h3>
-          <p>Android is configured for SDK 36 with Hermes enabled and includes TFLite plus ONNX runtime dependencies. Services and notification listeners are declared in the manifest.</p>
-        </div>
-        <div class="subsection">
-          <h3>Notification pipeline</h3>
-          <p><code>NotificationService</code> captures posted notifications, filters by supported apps, buffers context, and applies tiered detection logic.</p>
-        </div>
-        <div class="subsection">
-          <h3>Event bridge</h3>
-          <p><code>NotificationEventEmitter</code> emits native events named <code>onNotification</code> to React Native with classification metadata.</p>
-        </div>
-      </section>
-
-      <section id="python-pipeline">
-        <h2>7. Python ML Pipeline</h2>
-        <p>The Python scripts support end-to-end model development, including feature extraction, training, distillation, and export.</p>
+      <section id="features">
+        <h2>5. Key Features</h2>
+        <p>The app provides comprehensive protection with user-friendly controls:</p>
         <ul>
-          <li>Dataset building and preprocessing</li>
-          <li>Detector model definitions and training loops</li>
-          <li>Distillation workflows for compact student models</li>
-          <li>ONNX and TFLite export scripts</li>
-          <li>Modern attack evaluation and benchmarking</li>
+          <li><strong>Real-time Message Scanning:</strong> Automatically analyzes incoming notifications</li>
+          <li><strong>Voice Call Protection:</strong> Detects synthetic speech during phone calls</li>
+          <li><strong>Threat History:</strong> Complete log of detected and blocked threats</li>
+          <li><strong>Customizable Settings:</strong> Adjust sensitivity and notification preferences</li>
+          <li><strong>Offline Operation:</strong> Works without internet connectivity</li>
         </ul>
       </section>
 
-      <section id="server">
-        <h2>8. Federated Reputation Server</h2>
-        <p>The optional <code>traverse_server.py</code> provides a privacy-preserving server backend for risk signals.</p>
+      <section id="future">
+        <h2>6. What's Next</h2>
+        <p>The project continues to evolve with advanced threat detection capabilities:</p>
         <ul>
-          <li>HMAC-validated submissions</li>
-          <li>Epoch-partitioned Bloom filters</li>
-          <li>Differential privacy via Laplace noise</li>
-          <li>Device consensus gating and reputation scoring</li>
+          <li>Enhanced audio deepfake detection algorithms</li>
+          <li>Expanded language support for global protection</li>
+          <li>Integration with additional messaging platforms</li>
+          <li>Advanced federated learning for threat intelligence</li>
         </ul>
       </section>
 
       <footer class="site-footer">
-        <p>Generated blog site from the Hackaccino / IntentFirewall technical dossier.</p>
+        <p>IntentFirewall - Protecting users from digital deception through innovative technology.</p>
+        <p><small>Built with ❤️ using React Native, TensorFlow Lite, and modern ML techniques</small></p>
       </footer>
     </article>
   </main>
