@@ -13,50 +13,52 @@
   <div class="matrix-overlay"></div>
 
   <script>
-    // Text Reveal Animation on Scroll
+    // Page Load: Show only header and sidebar
+    // On scroll: Reveal sections one by one from menu
+    
     const observerOptions = {
-      threshold: 0.05,
-      rootMargin: '0px 0px -50px 0px'
+      threshold: 0.15,
+      rootMargin: '0px 0px -100px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Animate all text elements in this section
+          // Reveal the section
+          entry.target.classList.add('revealed');
+          
+          // Animate child elements with stagger
           const children = entry.target.querySelectorAll('h2, p, h3, li, .feature-grid > div, .architecture-card, .subsection');
           children.forEach((child, index) => {
-            child.classList.add('in-view');
+            child.classList.add('animate-text', 'in-view');
             child.style.animationDelay = (index * 0.08) + 's';
           });
+          
           observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
-    // Initialize animations
-    const initAnimations = () => {
-      // Add animate-text class to all elements that should animate (excluding sidebar)
-      document.querySelectorAll('.post-body h2, .site-header h1, .site-header p, .post-body p, .post-body h3, .post-body li, .feature-grid > div, .architecture-card, .subsection').forEach(el => {
-        el.classList.add('animate-text');
-      });
-
-      // Observe each section for scroll-based animation
+    // Initialize on page load
+    const initPageLoad = () => {
+      // Hide all sections initially
       document.querySelectorAll('.post-body section').forEach(section => {
+        section.classList.remove('revealed');
         observer.observe(section);
       });
 
-      // Animate header immediately on load
+      // Show header immediately with animation
       const headerElements = document.querySelectorAll('.site-header h1, .site-header p');
       headerElements.forEach((el, index) => {
-        el.classList.add('in-view');
+        el.classList.add('animate-text', 'in-view');
         el.style.animationDelay = (index * 0.15) + 's';
       });
     };
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initAnimations);
+      document.addEventListener('DOMContentLoaded', initPageLoad);
     } else {
-      initAnimations();
+      initPageLoad();
     }
   </script>
   <header class="site-header">

@@ -100,26 +100,15 @@ body::before {
   animation: slideUpFade 0.8s ease-out forwards;
 }
 
-.post-body h2 {
-  animation-delay: 0s;
+.post-body section {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-.post-body p {
-  animation-delay: 0.15s;
-}
-
-.post-body h3 {
-  animation-delay: 0.25s;
-}
-
-.post-body li {
-  animation-delay: 0.35s;
-}
-
-.feature-grid > div,
-.architecture-card,
-.subsection {
-  animation-delay: 0.2s;
+.post-body section.revealed {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 img {
