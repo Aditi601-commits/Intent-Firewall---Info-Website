@@ -94,7 +94,6 @@ body::before {
 
 .animate-text {
   opacity: 0;
-  animation: slideUpFade 0.8s ease-out forwards;
 }
 
 .animate-text.in-view {

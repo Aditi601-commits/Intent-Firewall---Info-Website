@@ -15,40 +15,41 @@
   <script>
     // Text Reveal Animation on Scroll
     const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -100px 0px'
+      threshold: 0.05,
+      rootMargin: '0px 0px -50px 0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          // Stagger animations for child elements
-          const children = entry.target.querySelectorAll('p, h3, li, .feature-grid > div, .architecture-card, .subsection');
+          // Animate all text elements in this section
+          const children = entry.target.querySelectorAll('h2, p, h3, li, .feature-grid > div, .architecture-card, .subsection');
           children.forEach((child, index) => {
-            if (!child.classList.contains('animate-text')) {
-              child.classList.add('animate-text');
-            }
-            child.style.animationDelay = (index * 0.1) + 's';
+            child.classList.add('in-view');
+            child.style.animationDelay = (index * 0.08) + 's';
           });
+          observer.unobserve(entry.target);
         }
       });
     }, observerOptions);
 
-    // Apply animation class and observe
+    // Initialize animations
     const initAnimations = () => {
-      // Animate main content sections
+      // Add animate-text class to all elements that should animate
+      document.querySelectorAll('h2, .site-header h1, .site-header p, .post-body p, h3, li, .feature-grid > div, .architecture-card, .subsection').forEach(el => {
+        el.classList.add('animate-text');
+      });
+
+      // Observe each section for scroll-based animation
       document.querySelectorAll('.post-body section').forEach(section => {
-        section.querySelectorAll('h2, p, h3, li, .feature-grid > div, .architecture-card, .subsection').forEach(el => {
-          el.classList.add('animate-text');
-        });
         observer.observe(section);
       });
 
-      // Animate header
-      document.querySelectorAll('.site-header h1, .site-header p').forEach(el => {
-        el.classList.add('animate-text');
-        el.style.animation = 'slideUpFade 1s ease-out forwards';
+      // Animate header immediately on load
+      const headerElements = document.querySelectorAll('.site-header h1, .site-header p');
+      headerElements.forEach((el, index) => {
+        el.classList.add('in-view');
+        el.style.animationDelay = (index * 0.15) + 's';
       });
     };
 
