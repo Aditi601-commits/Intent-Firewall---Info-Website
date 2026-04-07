@@ -35,8 +35,8 @@
 
     // Initialize animations
     const initAnimations = () => {
-      // Add animate-text class to all elements that should animate
-      document.querySelectorAll('h2, .site-header h1, .site-header p, .post-body p, h3, li, .feature-grid > div, .architecture-card, .subsection').forEach(el => {
+      // Add animate-text class to all elements that should animate (excluding sidebar)
+      document.querySelectorAll('.post-body h2, .site-header h1, .site-header p, .post-body p, .post-body h3, .post-body li, .feature-grid > div, .architecture-card, .subsection').forEach(el => {
         el.classList.add('animate-text');
       });
 

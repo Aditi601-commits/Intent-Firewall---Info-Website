@@ -215,6 +215,7 @@ img {
   padding: 2rem;
   box-shadow: var(--shadow);
   backdrop-filter: blur(12px);
+  opacity: 1 !important;
 }
 
 .sidebar h2 {
