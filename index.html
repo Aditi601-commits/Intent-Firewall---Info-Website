@@ -11,13 +11,60 @@
 </head>
 <body>
   <div class="matrix-overlay"></div>
+
+  <script>
+    // Text Reveal Animation on Scroll
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          // Stagger animations for child elements
+          const children = entry.target.querySelectorAll('p, h3, li, .feature-grid > div, .architecture-card, .subsection');
+          children.forEach((child, index) => {
+            if (!child.classList.contains('animate-text')) {
+              child.classList.add('animate-text');
+            }
+            child.style.animationDelay = (index * 0.1) + 's';
+          });
+        }
+      });
+    }, observerOptions);
+
+    // Apply animation class and observe
+    const initAnimations = () => {
+      // Animate main content sections
+      document.querySelectorAll('.post-body section').forEach(section => {
+        section.querySelectorAll('h2, p, h3, li, .feature-grid > div, .architecture-card, .subsection').forEach(el => {
+          el.classList.add('animate-text');
+        });
+        observer.observe(section);
+      });
+
+      // Animate header
+      document.querySelectorAll('.site-header h1, .site-header p').forEach(el => {
+        el.classList.add('animate-text');
+        el.style.animation = 'slideUpFade 1s ease-out forwards';
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAnimations);
+    } else {
+      initAnimations();
+    }
+  </script>
   <header class="site-header">
     <div class="header-inner">
       <div>
-        <p class="eyebrow">Threat Intelligence</p>
-        <h1>IntentFirewall Brief</h1>
+        <p class="eyebrow animate-text">Threat Intelligence</p>
+        <h1 class="animate-text">IntentFirewall Brief</h1>
       </div>
-      <p class="header-subtitle">A classified overview of the IntentFirewall security stack, threat detection flow, and AI-driven defense systems.</p>
+      <p class="header-subtitle animate-text">A classified overview of the IntentFirewall security stack, threat detection flow, and AI-driven defense systems.</p>
     </div>
   </header>
 

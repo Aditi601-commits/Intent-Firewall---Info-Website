@@ -70,6 +70,59 @@ body::before {
   100% { transform: translateY(-198px); }
 }
 
+@keyframes slideUpFade {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-text {
+  opacity: 0;
+  animation: slideUpFade 0.8s ease-out forwards;
+}
+
+.animate-text.in-view {
+  animation: slideUpFade 0.8s ease-out forwards;
+}
+
+.post-body h2 {
+  animation-delay: 0s;
+}
+
+.post-body p {
+  animation-delay: 0.15s;
+}
+
+.post-body h3 {
+  animation-delay: 0.25s;
+}
+
+.post-body li {
+  animation-delay: 0.35s;
+}
+
+.feature-grid > div,
+.architecture-card,
+.subsection {
+  animation-delay: 0.2s;
+}
+
 img {
   max-width: 100%;
 }
